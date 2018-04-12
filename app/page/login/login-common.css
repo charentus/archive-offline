@@ -1,0 +1,31 @@
+StackLayout {
+    margin-left: 15;
+    margin-right: 15;
+    padding-bottom: 15;
+    background-color: white;
+  }
+  Image {
+    margin-top: 5;
+    margin-bottom: 20;
+  }
+  Button, TextField, label {
+    margin-left: 16;
+    margin-right: 16;
+    margin-bottom: 10;
+    font-size: 16pt;
+  }
+  .submit-button {
+    background-color: #393939;
+    color: white;
+    margin-top: 20;
+  }
+  .firstParagraphe {
+    margin-top: 30px;
+    padding-top: 30px;
+    font-size: 16pt;
+  }
+  ActionBar {
+    /*    background-color:  #3C5AFD;*/
+        background-color: #393939;
+        color: white;
+    }

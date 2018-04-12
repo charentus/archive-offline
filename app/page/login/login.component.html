@@ -1,0 +1,98 @@
+<!--
+The template defines the view of the component - what is actually rendered. 
+In NativeScript applications the template is defined with XML using NativeScript UI elements. 
+It is different from HTML. So instead of <input>, <span>, <div> etc. - we have <TextField>, <Label> and layouts.
+The important thing is that although the elements are different - all of the Angular’s template syntax works exactly the same. 
+So you can still use template expressions, bindings, templates as well as all the built-in directives.
+-->
+
+<!--
+The ActionBar is the NativeScript common abstraction over the Android ActionBar and iOS NavigationBar.
+http://docs.nativescript.org/ui/action-bar
+-->
+<ActionBar title="Archives Offline" class="action-bar">
+</ActionBar>
+
+<!--
+The StackLayout stacks UI components on the screen — either vertically or horizontally.
+In this case, the StackLayout does vertical stacking; you can change the stacking to
+horizontal by applying a orientation="horizontal" attribute to the <StackLayout> element.
+You can learn more about NativeScript layouts at https://docs.nativescript.org/ui/layout-containers.
+
+These components make use of several CSS class names that are part of the NativeScript
+core theme, such as p-20, btn, h2, and list-group. You can view a full list of the
+class names available for styling your app at https://docs.nativescript.org/ui/theme.
+-->
+
+<StackLayout class="page">
+        <!--Button text="Reinit (debug)" class="submit-button" (tap)='reinit()'></Button-->
+        <!--/StackLayout>GridLayout class="page" rows="auto, *"-->
+      <StackLayout [visibility]="showPair ? 'visible' : 'collapse'">
+        <label class="firstParagraphe" textWrap="true" text="Welcome"></label>
+        <label textWrap="true" text="you need to pair your device with Archives Server"></label>
+        <label textWrap="true" text="Open your Browser, connect to Archives"></label>
+        <label textWrap="true" text="Open Storage management menu"></label>
+        <label textWrap="true" text="Then choose the storage part you want to work in."></label>
+        <label textWrap="true" text="Open Tab 'Mobile', then press 'Scan' button below to scan QRcode on Screen."></label>
+        <Button text="Scan" class="submit-button" (tap)='scanConfig()'></Button>
+    </StackLayout>
+
+
+    <StackLayout  [visibility]="showLogginEversuite ?'visible' : 'collapse'">
+        <label class="firstParagraphe" textWrap="true" text="Hello  "></label> 
+        <label textWrap="true" text="To start synchronisation from server you have to type your password."></label> 
+        <label textWrap="true" text="Then click on 'Synchronize'."></label> 
+        <label textWrap="true" text="( Synchronize process may take a while...)"></label> 
+        <TextField hint="name" secure="true"  [(ngModel)]="userPassword"
+        autocorrect="false" autocapitalizationType="none"></TextField>
+        <Button text="Synchronize" class="submit-button" (tap)='doLogginEversuite()'></Button>
+</StackLayout> 
+
+<StackLayout  [visibility]="showLogginLocal ?'visible' : 'collapse'">
+    <label class="firstParagraphe" textWrap="true" text=" "></label> 
+    <label textWrap="true" text="Enter your password  "></label> 
+    <TextField hint="name" secure="true"  [(ngModel)]="userPassword"
+    autocorrect="false" autocapitalizationType="none"></TextField>
+    <Button text="Log in" class="submit-button" (tap)='doLogginLocal()'></Button>
+</StackLayout> 
+
+
+<StackLayout  [visibility]="showWait ?'visible' : 'collapse'">
+        <ActivityIndicator class="activity-indicator"></ActivityIndicator>
+            <label text="WAIT"></label> 
+    <!--Button text="fillDB" class="submit-button" (tap)='fillDB()'></Button-->
+</StackLayout>
+          
+<!--StackLayout  [visibility]="showList ?'visible' : 'collapse'"-->
+<StackLayout  >
+    <!--Button text="fillDB" class="submit-button" (tap)='fillDB()'></Button>
+    <Button text="ListDB" class="submit-button" (tap)='listDB()'></Button>
+    <Button text="clearDB" class="submit-button" (tap)='clearDB()'></Button>
+    <Button text="queryDB 27" class="submit-button" (tap)='queryDB("B0000000027")'></Button-->
+    <ListView [items]="datas" class="list-group">
+        <ng-template let-item="item">
+            <Label  [text]="item._id"
+                class="list-group-item"></Label>
+        </ng-template>
+    </ListView>
+</StackLayout>
+          
+        
+</StackLayout>
+
+<!--StackLayout class="page">
+
+        <label textWrap="true" text="Hello  {{config.userLabel()}}"></label> 
+
+        [visibility]="isLoading ? 'visible' : 'collapse'" 
+    <TextField hint="name" keyboardType="email" [(ngModel)]="userLabel"
+        autocorrect="false" autocapitalizationType="none"></TextField>
+    <label text="{{userLabel2}}"></label>
+        <Button [text]="isLogged ? 'Logged' : isPaired ? 'paired':'Sign in'" class="submit-button" (tap)="clic()"></Button>
+        <ListView [items]="items" class="list-group">
+        <ng-template let-item="item">
+            <Label [nsRouterLink]="['/item', item.id]" [text]="item.name"
+                class="list-group-item"></Label>
+        </ng-template>
+    </ListView>
+</StackLayout-->

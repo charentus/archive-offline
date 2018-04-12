@@ -1,0 +1,87 @@
+label {
+    margin-left: 16;
+    margin-right: 16;
+    margin-bottom: 10;
+    font-size: 12pt;
+}
+ActionBar {
+/*    background-color:  #3C5AFD;*/
+    background-color: #393939;
+    color: white;
+}
+.font-awesome {
+    font-family: "FontAwesome";
+}
+.font-awesome-big {
+    font-family: "FontAwesome";
+    font-size: 22pt; 
+    vertical-align: middle;
+}
+.font-awesome-biggest {
+    font-family: "FontAwesome";
+    font-size: 48pt; 
+    vertical-align: middle;
+}
+
+.botton-bar-label {
+    font-size: 20px;
+    color: white;
+    vertical-align: middle;
+    background-color: #393939;
+}
+
+.option-button {
+    margin: 0px;
+    border: 0px;
+    height: 100%;
+    color: white;
+    background-color: #393939;
+    text-align: right;
+    vertical-align: middle;
+}
+
+
+.rounded-red {
+    border-radius: 80px;
+    background-color: red;
+    height: 160px;
+    width : 160px;
+}
+
+.offset-item-text {
+    padding-left: 100px;
+    font-weight : bold;
+}
+
+.message-centered {
+    font-size: 18px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.main-screen {
+    padding: 0px;
+    margin: 0px;
+}
+
+.list-actions {
+    font-size: 20px;
+    margin: 0;
+    color: white;
+    background-color: #393939;
+    text-align: right;
+    vertical-align: bottom;
+
+}
+
+.list-actions-item {
+    font-size: 20px;
+    color: white;
+    /* height: 30px; */
+    background-color: #393939;
+    text-align: right;
+    padding-right: 60px;
+}
+.bottom-bar-label {
+    font-size: 20px;
+}

@@ -1,0 +1,36 @@
+ActionBar {
+/*    background-color:  #3C5AFD;*/
+    background-color: #393939;
+    color: white;
+}
+
+Button, TextField, label {
+    margin-left: 16;
+    margin-right: 16;
+    margin-bottom: 10;
+    font-size: 16pt;
+  }
+
+  .firstParagraphe {
+    margin-top: 30px;
+    padding-top: 30px;
+    font-size: 16pt;
+  }
+.list-actions {
+    margin: 0;
+    color: white;
+    background-color: black;
+    text-align: right;
+
+}
+
+.list-actions-item {
+    color: white;
+    /* height: 30px; */
+    background-color: black;
+    text-align: right;
+    padding-right: 60px;
+}
+.font-awesome {
+    font-family: "FontAwesome";
+}
