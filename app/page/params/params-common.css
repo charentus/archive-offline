@@ -1,0 +1,22 @@
+ActionBar {
+    /*    background-color:  #3C5AFD;*/
+        background-color: #393939;
+        color: white;
+    }
+    
+Button, Switch, TextField, label {
+        font-size: 22pt;
+        vertical-align: middle
+}
+.page {
+    background-color: #393939;
+    color: white;
+}
+StackLayout {
+
+    padding: 50px;
+}
+
+.SwitchChecked {
+    background-color: yellowgreen;
+}

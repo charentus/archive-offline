@@ -32,9 +32,11 @@ http://docs.nativescript.org/ui/action-bar
                 <!-- <Label  [text]="item._id"
                     class="list-group-item"></Label> -->
      
-                    <GridLayout rows ="*" columns="*,150px">
-                        <Label          [text]="item.synchro"></Label>
-                        <Label col="1" text="&#xF017;"  [visibility]="(item.synchro == 'todo')? 'visible': 'collapse'" class="font-awesome" textWrap="true"></Label>
+                    <GridLayout rows ="*" columns="*,*,*,100px">
+                            <Label         [text]="item.action" class="item-synchro-left"></Label>
+                            <Label col="1" [text]="item.time" class="item-synchro-left"></Label>
+                            <Label col="2" [text]="item.item" class="item-synchro-left"></Label>
+                            <Label col="3" text="&#xF017;"  [visibility]="(item.synchro == 'todo')? 'visible': 'collapse'" class="item-synchro-right font-awesome" textWrap="true"></Label>
                         <!--Label col="1" text="&#xF00C;"  [visibility]="(item.synchro == 'done')? 'visible': 'collapse'" class="font-awesome" textWrap="true"></Label>
                         <Label col="1" text="&#xF00D;"  [visibility]="(item.synchro == 'error')? 'visible': 'collapse'" class="font-awesome" textWrap="true"></Label-->
                 </GridLayout>

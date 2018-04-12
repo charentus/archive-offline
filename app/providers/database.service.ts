@@ -20,6 +20,11 @@ export class DatabaseService {
                 emitter.emit(document._id, document);
             }
         });
+        this.database.createView("item-to-confirm-externalize", "1", function(document, emitter) {
+            if((document.type == "box") && (document.externeEtat == 5)) {
+                emitter.emit(document._id, document);
+            }
+        });
         this.database.createView("positions", "1", function(document, emitter) {
             if(document.type == "position") {
                 emitter.emit(document._id, document);
@@ -122,6 +127,19 @@ export class DatabaseService {
         for (let data of items) {
             i = i+ 1;
             data.type = "box";
+
+//DEBUG TO BE REMOVED
+//DEBUG TO BE REMOVED
+//DEBUG TO BE REMOVED
+if ((i%7)==0) {
+    data.externeEtat = 5;
+}
+//DEBUG TO BE REMOVED
+//DEBUG TO BE REMOVED
+//DEBUG TO BE REMOVED
+
+
+
             this.database.createDocument(data, data.code);
             this.hasData = true;
             if ((i%50)==0) {

@@ -8,7 +8,7 @@ import { ActionBar } from "tns-core-modules/ui/action-bar/action-bar";
 import * as dialogs from "ui/dialogs";
 
 @Component({
-    selector: "ns-synchros",
+    selector: "ns-synchro",
    // providers: [EversuiteService],
     moduleId: module.id,
     templateUrl: "./synchro.component.html",
@@ -52,7 +52,7 @@ export class SynchroComponent implements OnInit {
         let errorSynchronized:string = "&#xF00D;";
         //item.synchro = "todo"; //todo,done,error
 
-        console.dir(item);
+        //console.dir(item);
         if (item.syncro == "done") {
             return okSynchronized
         }

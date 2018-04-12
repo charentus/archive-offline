@@ -18,6 +18,7 @@ import { Couchbase } from "nativescript-couchbase";
 import { BarcodeScanner } from 'nativescript-barcodescanner';
 import Toolbox = require('nativescript-toolbox');
 import { RouterExtensions } from "nativescript-angular/router";
+import * as dialogs from "ui/dialogs";
 
 @Component({
     selector: "ns-items",
@@ -59,8 +60,13 @@ export class LoginComponent implements OnInit {
 
     //full reinit of locals datas
     reinit() {
-        this.databaseService.clearDB();
-        this.updateScreen();
+        dialogs.confirm("This will erase all your application's datas").then(result => {
+            console.log("Dialog result: " + result);
+            if (result) {
+                this.databaseService.clearDB();
+                this.updateScreen();
+            }
+        });
     }
 
     //hiding/showing UI parts according login process
@@ -156,7 +162,7 @@ export class LoginComponent implements OnInit {
                 this.eversuiteService.synchEversuite(this.config).subscribe((result) => {
                     this.onSynchDBsucces(result);
                 }, (error) => {
-                    console.dir(error);
+                    //console.dir(error);
                 });
                 
              

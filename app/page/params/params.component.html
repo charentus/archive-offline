@@ -1,0 +1,13 @@
+<ActionBar title="Archives Offline - parameters" class="action-bar">
+        <NavigationButton android.systemIcon="ic_menu_back" text="Back to ActionBar" (tap)="goToMain()"></NavigationButton>
+</ActionBar>
+    
+<StackLayout class="page">
+    <GridLayout rows ="*,*" columns="*">
+
+        <Label  text="Use Sound"></Label>
+        <Switch class="m-15" [checked]="useSound" (checkedChange)="onUSChecked($event)" [ngClass]="getUSClass()"  row="0" col="1"></Switch>
+        <Label row="1" text="OnlineMode"></Label>
+        <Switch class="m-15" [checked]="onlineMode" (checkedChange)="onOMChecked($event)" [ngClass]="getOMClass()"    row="1" col="1"></Switch>
+    </GridLayout>
+</StackLayout>

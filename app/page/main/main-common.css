@@ -85,3 +85,6 @@ ActionBar {
 .bottom-bar-label {
     font-size: 20px;
 }
+.action-label {
+    padding: 10px;
+}

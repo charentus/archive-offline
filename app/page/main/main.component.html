@@ -1,19 +1,22 @@
 
 <ActionBar  android:title="ArchivesOffline" class="action-bar"  >
-    <ActionItem ios.position="left"  (tap)="goToSynchro()" >
-        <Label class="m-15 font-awesome-big"  text="&#xF021;  " ></Label>
-    </ActionItem>
-    <!--ActionItem text="&#xF021;" class="font-awesome-big" ios.position="left"></ActionItem>
+        <ActionItem ios.position="left"  (tap)="goToSynchro()" >
+            <Label class="m-15 font-awesome-big"  text="&#xF021;     " ></Label>
+        </ActionItem>
+        <ActionItem ios.position="left"  (tap)="goToParameters()" >
+            <Label class="m-15 font-awesome-big"  text="&#xF013;     " ></Label>
+        </ActionItem>
+                <!--ActionItem text="&#xF021;" class="font-awesome-big" ios.position="left"></ActionItem>
     <ActionItem text="Item" ios.position="right" android.position="popup"></ActionItem-->
         
     <ActionItem ios.position="right" android.position="popup" text="logout" (tap)="goToLogin()" >
     </ActionItem>
 </ActionBar>
 
-<GridLayout columns="*" rows="*,60px,80px, 50px" class="page"  height="100%" class="main-screen" >
+<GridLayout columns="*" rows="auto,*,60px,80px, 50px" class="page"  height="100%" class="main-screen" >
     <!--label text="&#xF017;aaaaaa" class="font-awesome-big" ></label-->
-    <FlexboxLayout flexDirection="column" >
-        <label [text]="title" class="font-awesome-big" ></label>
+    <label [text]="titleList" class="action-label font-awesome-big" ></label>
+    <FlexboxLayout row="1" flexDirection="column" >
         <ListView [items]="infos">
             <ng-template let-item="item">
                 <GridLayout rows ="*" columns="150px,*">
@@ -24,21 +27,21 @@
         </ListView>
     
     </FlexboxLayout>
-    <Label row="1" textWrap="true" class="message-centered" >
+    <Label row="2" textWrap="true" class="message-centered" >
             <FormattedString>
                     <Span [text]="instructions" ></Span>
                     <!--Span text="&#x000A;&#x000A;&#xF063;" class="font-awesome"></Span-->
             </FormattedString>
     </Label>
-    <Button row="2" [visibility]="(showAction == true)?'collapse' : 'visible'" text="&#xF02A;" class="rounded-red font-awesome-biggest" (tap)="scan()"></Button>
+    <Button row="3" [visibility]="(showAction == true)?'collapse' : 'visible'" text="&#xF02A;" class="rounded-red font-awesome-biggest" (tap)="scan()"></Button>
 
-    <ListView  row="0" rowspan="3"  [items]="actions" [visibility]="(showAction == true)?'visible' : 'collapse'"  class="list-actions">
+    <ListView  row="0" rowspan="4"  [items]="actions" [visibility]="(showAction == true)?'visible' : 'collapse'"  class="list-actions">
             <ng-template let-item="item">
-                            <Label   [text]="item.label" textWrap="true" class="list-actions-item" (tap)="chooseAction(item.code)"></Label>
+                            <Label   [text]="item.title" textWrap="true" class="list-actions-item" (tap)="chooseAction(item.code)"></Label>
                 </ng-template>
         </ListView>
     // bottom screen toolbar
-    <Button row="3"   class="option-button"  (tap)="showDrawer()" >
+    <Button row="4"   class="option-button"  (tap)="showDrawer()" >
         <FormattedString>
                 <Span [text]="currentAction" fontWeight="Bold" class="bottom-bar-label" ></Span>
                 <Span text="&nbsp;&#xF039;" fontWeight="Bold" class="font-awesome-big" ></Span>
