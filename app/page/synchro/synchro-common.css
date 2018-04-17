@@ -3,12 +3,25 @@ ActionBar {
     background-color: #393939;
     color: white;
 }
+.page {
+    padding: 0px;
+    margin: 0px;
+    background-image: url("~/images/fond.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-Button, TextField, label {
-    margin-left: 16;
-    margin-right: 16;
-    margin-bottom: 10;
-    font-size: 16pt;
+.align-right {
+    text-align: right;
+}
+
+Button, TextField, label, Switch {
+    font-size: 14pt;
+  }
+  .submit-button {
+    background-color: #393939;
+    color: white;
+    margin-top: 20;
   }
 
   .firstParagraphe {
@@ -46,4 +59,8 @@ Button, TextField, label {
     font-size: 16px;
     vertical-align: middle;
     text-align: right
+}
+
+.SwitchChecked {
+    background-color: yellowgreen;
 }

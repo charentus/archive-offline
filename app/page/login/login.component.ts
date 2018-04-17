@@ -129,6 +129,7 @@ export class LoginComponent implements OnInit {
         let ni : number = 0;
         let ns : number = 0;
         let ne : number = 0;
+        let nl : number = 0;
         if (body.items) {
             ni = this.databaseService.fillWithItems(body.items)
         }
@@ -138,7 +139,9 @@ export class LoginComponent implements OnInit {
         if (body.externes) {
             ne = this.databaseService.fillWithExternes(body.externes)
         }
-        this.databaseService.setDBinfo({ hasData : true, nbItems : ni, nbPositions : ns, nbExternes: ne});
+        if (body.summary) {
+            this.databaseService.setDBinfo(body.summary);
+        }
         this.isDBLoaded = true;
         this.updateScreen();
     }
@@ -192,18 +195,18 @@ export class LoginComponent implements OnInit {
 
     scanConfig(): void {
 
-        // SIMULATION
-        // let ccf:any = {
-        //     apiUrl : "https://d-charentus.everteam.com:8443/es",
-        //     userLabel: "Administrator EverSuite",
-        //     userCode: "admin",
-        //     storageKey : 1
-        // };
-        // if (ccf != undefined) {
-        //     this.databaseService.setServerConfig(ccf);
-        //     this.updateScreen();
-        //     return;
-        // }
+        //SIMULATION
+        let ccf:any = {
+            apiUrl : "https://d-charentus.everteam.com:8443/es",
+            userLabel: "Administrator EverSuite",
+            userCode: "admin",
+            storageKey : 1
+        };
+        if (ccf != undefined) {
+            this.databaseService.setServerConfig(ccf);
+            this.updateScreen();
+            return;
+        }
 
 
         let options:any = {

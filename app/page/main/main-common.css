@@ -15,6 +15,8 @@ ActionBar {
 .font-awesome-big {
     font-family: "FontAwesome";
     font-size: 22pt; 
+}
+.align-action-button {
     vertical-align: middle;
 }
 .font-awesome-biggest {
@@ -30,10 +32,21 @@ ActionBar {
     background-color: #393939;
 }
 
+.botton-bar-icon {
+    margin-left: 15px;
+    vertical-align: middle;
+}
+
+.botton-bar-formatted {
+    vertical-align: middle;
+    margin-right: 5px
+}
+
 .option-button {
-    margin: 0px;
-    border: 0px;
+    width: 100%;
     height: 100%;
+    padding-left:15px;
+    padding-top:15px;
     color: white;
     background-color: #393939;
     text-align: right;
@@ -42,10 +55,11 @@ ActionBar {
 
 
 .rounded-red {
-    border-radius: 80px;
+    border-radius: 100px;
     background-color: red;
-    height: 160px;
-    width : 160px;
+    
+    height: 200px;
+    width : 200px;
 }
 
 .offset-item-text {
@@ -54,14 +68,17 @@ ActionBar {
 }
 
 .message-centered {
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
-    vertical-align: middle;
+    vertical-align: bottom;
 }
 
 .main-screen {
     padding: 0px;
     margin: 0px;
+    background-image: url("~/images/fond.png");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .list-actions {
@@ -86,5 +103,5 @@ ActionBar {
     font-size: 20px;
 }
 .action-label {
-    padding: 10px;
+    padding: 0px;
 }

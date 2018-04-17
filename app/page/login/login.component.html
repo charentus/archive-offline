@@ -25,25 +25,25 @@ core theme, such as p-20, btn, h2, and list-group. You can view a full list of t
 class names available for styling your app at https://docs.nativescript.org/ui/theme.
 -->
 
-<StackLayout class="page">
+<StackLayout class="main-screen">
         <!--Button text="Reinit (debug)" class="submit-button" (tap)='reinit()'></Button-->
         <!--/StackLayout>GridLayout class="page" rows="auto, *"-->
       <StackLayout [visibility]="showPair ? 'visible' : 'collapse'">
         <label class="firstParagraphe" textWrap="true" text="Welcome"></label>
-        <label textWrap="true" text="you need to pair your device with Archives Server"></label>
-        <label textWrap="true" text="Open your Browser, connect to Archives"></label>
-        <label textWrap="true" text="Open Storage management menu"></label>
-        <label textWrap="true" text="Then choose the storage part you want to work in."></label>
-        <label textWrap="true" text="Open Tab 'Mobile', then press 'Scan' button below to scan QRcode on Screen."></label>
+        <label textWrap="true" text="you need to pair your device with Archives server"></label>
+        <label textWrap="true" text="- Open your Browser, connect to Archives"></label>
+        <label textWrap="true" text="- Go to 'Storage management menu'"></label>
+        <label textWrap="true" text="- Then choose the storage part you want to work in."></label>
+        <label textWrap="true" text="- Open Tab 'Mobile', then press 'Scan' button below to scan QRcode on Screen."></label>
         <Button text="Scan" class="submit-button" (tap)='scanConfig()'></Button>
     </StackLayout>
 
 
     <StackLayout  [visibility]="showLogginEversuite ?'visible' : 'collapse'">
-        <label class="firstParagraphe" textWrap="true" text="Hello  "></label> 
+        <label class="firstParagraphe" textWrap="true" text=" "></label> 
         <label textWrap="true" text="To start synchronisation from server you have to type your password."></label> 
         <label textWrap="true" text="Then click on 'Synchronize'."></label> 
-        <label textWrap="true" text="( Synchronize process may take a while...)"></label> 
+        <label textWrap="true" text="( Synchronize process may take a while, be patient...)"></label> 
         <TextField hint="name" secure="true"  [(ngModel)]="userPassword"
         autocorrect="false" autocapitalizationType="none"></TextField>
         <Button text="Synchronize" class="submit-button" (tap)='doLogginEversuite()'></Button>

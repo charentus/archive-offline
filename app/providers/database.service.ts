@@ -25,6 +25,32 @@ export class DatabaseService {
                 emitter.emit(document._id, document);
             }
         });
+        this.database.createView("item-to-loan-out", "1", function(document, emitter) {
+            if(document.type == "box") {
+                let inf = document.loanInfo;
+                if( inf && (inf.move == "out")) {
+                    emitter.emit(document._id, document);
+                }
+            }
+        });
+
+        this.database.createView("item-to-loan-in", "1", function(document, emitter) {
+            if(document.type == "box") {
+                let inf = document.loanInfo;
+                if( inf && (inf.move == "in")) {
+                    emitter.emit(document._id, document);
+                }
+            }
+        });
+
+        this.database.createView("item-to-destruct", "1", function(document, emitter) {
+            if(document.type == "box") {
+                if( document.toDestruct  == true) {
+                    emitter.emit(document._id, document);
+                }
+            }
+        });
+
         this.database.createView("positions", "1", function(document, emitter) {
             if(document.type == "position") {
                 emitter.emit(document._id, document);
@@ -171,8 +197,10 @@ if ((i%7)==0) {
             console.log(" loaded Externe #"+i);
             this.hasData = true;
         }
-        return i;
+        return i; 
     }
+
+    
 
     hasDatas() : boolean {
         return this.getDBinfo() ? this.getDBinfo().hasData : false;
@@ -226,7 +254,7 @@ if ((i%7)==0) {
                 for(var key in temp) {
                     if (!key.startsWith("_")) {
                         //remove internal fiedls as "_id" and "_rev"
-                        ret.splice(0,0,{name: key, value:temp[key]});
+                        ret.splice(0,0,{name: key, value:JSON.stringify(temp[key])});
                     }
                 }
             }

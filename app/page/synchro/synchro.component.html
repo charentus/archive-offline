@@ -26,19 +26,22 @@ http://docs.nativescript.org/ui/action-bar
     -->
     
     <StackLayout class="page">
+        <StackLayout orientation="horizontal">
+            <Label class="m-15" text="OnlineMode"></Label>
+            <Switch class="m-5" [checked]="onlineMode" (checkedChange)="onOMChecked($event)" [ngClass]="getOMClass()"    row="1" col="1"></Switch>
+            <Button [visibility]="(actions.length != 0)? 'visible' : 'collapse'" text="Synchronize" class="submit-button align-right" (tap)="synchroAll()"></Button>
+        </StackLayout>
+    
         <label [visibility]="(actions.length == 0)? 'visible' : 'collapse'" text="nothing to synchronize" class="firstParagraphe"></label>
         <ListView [items]="actions" class="list-group">
             <ng-template let-item="item">
-                <!-- <Label  [text]="item._id"
-                    class="list-group-item"></Label> -->
-     
-                    <GridLayout rows ="*" columns="*,*,*,100px">
-                            <Label         [text]="item.action" class="item-synchro-left"></Label>
-                            <Label col="1" [text]="item.time" class="item-synchro-left"></Label>
-                            <Label col="2" [text]="item.item" class="item-synchro-left"></Label>
-                            <Label col="3" text="&#xF017;"  [visibility]="(item.synchro == 'todo')? 'visible': 'collapse'" class="item-synchro-right font-awesome" textWrap="true"></Label>
-                        <!--Label col="1" text="&#xF00C;"  [visibility]="(item.synchro == 'done')? 'visible': 'collapse'" class="font-awesome" textWrap="true"></Label>
-                        <Label col="1" text="&#xF00D;"  [visibility]="(item.synchro == 'error')? 'visible': 'collapse'" class="font-awesome" textWrap="true"></Label-->
+                <GridLayout rows ="*" columns="*,*,*,100px">
+                    <Label col="0"        [text]="item.code" class="item-synchro-left"></Label>
+                    <Label col="1" [text]="item.time" class="item-synchro-left"></Label>
+                    <Label col="2" [text]="item.item" class="item-synchro-left"></Label>
+                    <Label col="3" text="&#xF017;"  [visibility]="(item.synchro == 'todo')? 'visible': 'collapse'" class="item-synchro-right font-awesome" textWrap="true"></Label>
+                    <Label col="3" text="&#xF00C;"  [visibility]="(item.synchro == 'done')? 'visible': 'collapse'" class="item-synchro-right font-awesome" textWrap="true"></Label>
+                    <Label col="3" text="&#xF00D;"  [visibility]="(item.synchro == 'error')? 'visible': 'collapse'" class="item-synchro-right font-awesome" textWrap="true"></Label>
                 </GridLayout>
             </ng-template>
         </ListView>

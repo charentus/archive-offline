@@ -2,7 +2,7 @@ StackLayout {
     margin-left: 15;
     margin-right: 15;
     padding-bottom: 15;
-    background-color: white;
+    /*background-color: white;*/
   }
   Image {
     margin-top: 5;
@@ -29,3 +29,10 @@ StackLayout {
         background-color: #393939;
         color: white;
     }
+  .main-screen {
+    padding: 0px;
+    margin: 0px;
+    background-image: url("~/images/fond.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+  }

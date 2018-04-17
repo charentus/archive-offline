@@ -1,10 +1,10 @@
 
 <ActionBar  android:title="ArchivesOffline" class="action-bar"  >
         <ActionItem ios.position="left"  (tap)="goToSynchro()" >
-            <Label class="m-15 font-awesome-big"  text="&#xF021;     " ></Label>
+            <Label class="m-10 align-action-button font-awesome-big"  text="&#xF021;     " ></Label>
         </ActionItem>
         <ActionItem ios.position="left"  (tap)="goToParameters()" >
-            <Label class="m-15 font-awesome-big"  text="&#xF013;     " ></Label>
+            <Label class="m-10 align-action-button font-awesome-big"  text="&#xF013;     " ></Label>
         </ActionItem>
                 <!--ActionItem text="&#xF021;" class="font-awesome-big" ios.position="left"></ActionItem>
     <ActionItem text="Item" ios.position="right" android.position="popup"></ActionItem-->
@@ -13,7 +13,7 @@
     </ActionItem>
 </ActionBar>
 
-<GridLayout columns="*" rows="auto,*,60px,80px, 50px" class="page"  height="100%" class="main-screen" >
+<GridLayout columns="*" rows="auto,*,70px,80px, 35px" class="page main-screen"  height="100%" >
     <!--label text="&#xF017;aaaaaa" class="font-awesome-big" ></label-->
     <label [text]="titleList" class="action-label font-awesome-big" ></label>
     <FlexboxLayout row="1" flexDirection="column" >
@@ -41,12 +41,12 @@
                 </ng-template>
         </ListView>
     // bottom screen toolbar
-    <Button row="4"   class="option-button"  (tap)="showDrawer()" >
-        <FormattedString>
+    <Label row="4"   class="option-button"  (tap)="showDrawer()" >
+        <FormattedString class="botton-bar-formatted">
                 <Span [text]="currentAction" fontWeight="Bold" class="bottom-bar-label" ></Span>
-                <Span text="&nbsp;&#xF039;" fontWeight="Bold" class="font-awesome-big" ></Span>
+                <Span text="&nbsp;&#xF039;" fontWeight="Bold" class="bottom-bar-icon font-awesome-big" ></Span>
         </FormattedString>
-    </Button>
+    </Label>
 </GridLayout>
 
 
