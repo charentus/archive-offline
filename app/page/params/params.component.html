@@ -3,11 +3,13 @@
 </ActionBar>
     
 <StackLayout class="page">
-    <GridLayout rows ="*,*" columns="*">
+    <GridLayout rows ="*,*,2*" columns="*">
+        <GridLayout row="1"                rows ="*,*" columns="40%*">
 
-        <Label  text="Use Sound"></Label>
-        <Switch class="m-15" [checked]="useSound" (checkedChange)="onUSChecked($event)" [ngClass]="getUSClass()"  row="0" col="1"></Switch>
-        <Label row="1" text="OnlineMode"></Label>
-        <Switch class="m-15" [checked]="onlineMode" (checkedChange)="onOMChecked($event)" [ngClass]="getOMClass()"    row="1" col="1"></Switch>
+            <Label                     text="Use Sound"></Label>
+            <Switch           col="1"  class="m-15" [checked]="useSound" (checkedChange)="onUSChecked($event)" [ngClass]="getUSClass()"></Switch>
+            <Label   row="1"           text="OnlineMode"></Label>
+            <Switch  row="1"  col="1"  class="m-15" [checked]="onlineMode" (checkedChange)="onOMChecked($event)" [ngClass]="getOMClass()"></Switch>
+        </GridLayout>
     </GridLayout>
 </StackLayout>

@@ -5,6 +5,7 @@ export class SynchroActionExtConfirme extends SynchroAction {
     constructor(mainComponent:MainComponent, title:string, label:string, inst:string) {
         super(mainComponent, title, label, inst);
         this.code = "EXT_PROP";
+        this.indexName = "item-to-confirm-externalize";
     }
 
     callbackScanButton(me:SynchroActionExtConfirme) : void  {
@@ -30,15 +31,15 @@ useOnlineMode() : boolean {
     return true;
 }
 
-getUIinitList() {
-           let externs = this.mainComponent.getDatabaseService().query("item-to-confirm-externalize");
-            let ret:any = [];
+// getUIinitList() {
+//            let externs = this.mainComponent.getDatabaseService().query("item-to-confirm-externalize");
+//             let ret:any = [];
 
-            for (const xt of externs) {
-                //UI update
-                ret.splice(0,0,{code: xt.code , name: xt.code , value:xt.code})
-                }
-                return ret;
-            }
+//             for (const xt of externs) {
+//                 //UI update
+//                 ret.splice(0,0,{code: xt.code , name: xt.code , value:xt.code})
+//                 }
+//                 return ret;
+//             }
 
 }

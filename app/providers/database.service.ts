@@ -12,6 +12,19 @@ export class DatabaseService {
 
     constructor() {}
     
+    public static hasActionNotDone(document:any, name:string) : boolean {
+        if(document) {
+            if(document.actions) {
+                if(document.actions[name]) {
+                    if( ! document.actions[name].done) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    } 
+
     init() {
         this.database = new Couchbase("archive-db");
         this.hasData = false;
@@ -21,16 +34,13 @@ export class DatabaseService {
             }
         });
         this.database.createView("item-to-confirm-externalize", "1", function(document, emitter) {
-            if((document.type == "box") && (document.externeEtat == 5)) {
+            if((document.type == "box") && (DatabaseService.hasActionNotDone(document, "EXT_CONF"))) {
                 emitter.emit(document._id, document);
             }
         });
         this.database.createView("item-to-loan-out", "1", function(document, emitter) {
-            if(document.type == "box") {
-                let inf = document.loanInfo;
-                if( inf && (inf.move == "out")) {
-                    emitter.emit(document._id, document);
-                }
+            if((document.type == "box")  && (DatabaseService.hasActionNotDone(document, "LOAN_OUT"))) {
+                emitter.emit(document._id, document);
             }
         });
 
@@ -43,13 +53,13 @@ export class DatabaseService {
             }
         });
 
-        this.database.createView("item-to-destruct", "1", function(document, emitter) {
-            if(document.type == "box") {
-                if( document.toDestruct  == true) {
-                    emitter.emit(document._id, document);
-                }
-            }
-        });
+        // this.database.createView("item-to-destruct", "1", function(document, emitter) {
+        //     if(document.type == "box") {
+        //         if( document.toDestruct  == true) {
+        //             emitter.emit(document._id, document);
+        //         }
+        //     }
+        // });
 
         this.database.createView("positions", "1", function(document, emitter) {
             if(document.type == "position") {
@@ -127,11 +137,11 @@ export class DatabaseService {
         //setting server config clear all database
         //this.clearDB();
         try {
-            this.getDatabase().deleteDocument(key)
-            this.getDatabase().createDocument( conf, key);
+            this.getDatabase().updateDocument( key, conf);
         }
         catch(e) {
-            this.getDatabase().updateDocument( key, conf);
+            this.getDatabase().deleteDocument(key)
+            this.getDatabase().createDocument( conf, key);
         }
     }
     getDBinfo(): any {

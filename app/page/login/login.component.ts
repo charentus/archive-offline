@@ -19,6 +19,7 @@ import { BarcodeScanner } from 'nativescript-barcodescanner';
 import Toolbox = require('nativescript-toolbox');
 import { RouterExtensions } from "nativescript-angular/router";
 import * as dialogs from "ui/dialogs";
+import { LocalDatas } from "../../shared/local.data";
 
 @Component({
     selector: "ns-items",
@@ -158,7 +159,7 @@ export class LoginComponent implements OnInit {
                 this.databaseService.setServerConfig(this.config.toDatas());
                 //not necessary to re_log locally
                 this.isLoggedLocally = true;
-
+                LocalDatas.setString("transcientCred", this.userPassword);
                 this.updateScreen();
 
 
@@ -181,6 +182,7 @@ export class LoginComponent implements OnInit {
 
         if (encodedPassword == this.config.hashPassword()) {
             this.isLoggedLocally = true;
+            LocalDatas.setString("transcientCred", this.userPassword);
         }
         else {
             alert("bad password");

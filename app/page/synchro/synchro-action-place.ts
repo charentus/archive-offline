@@ -42,7 +42,7 @@ export class SynchroActionPlace extends SynchroAction {
                     me.mainComponent.alert({title:"Error", message:"You, should scan a position first"});
                 }
                 else {
-                    me.addAction({position:me.getCurPosition() ,item:item.code});
+                    me.addAction({position:me.getCurPosition() ,item:item.code}, item);
                 }
             }
             else {
@@ -62,11 +62,11 @@ export class SynchroActionPlace extends SynchroAction {
     }
  
  
-    getOnlineUrl(details:any): string {
+    getOnlineUrl(details:any, itemDB:any): string {
         return "/rest/archives/storages/"+details.position
     }
 
-    getOnlineParam(details:any): any {
+    getOnlineParam(details:any, itemDB:any): any {
         return {
             "type": {
               "kind": "BOITE",

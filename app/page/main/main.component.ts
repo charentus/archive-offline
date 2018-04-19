@@ -25,10 +25,9 @@ import { SynchroAction } from "../synchro/synchro-action";
 import { SynchroActionPlace } from "../synchro/synchro-action-place";
 import { SynchroActionInfo } from "../synchro/synchro-action-info";
 import { SynchroActionExtConfirme } from "../synchro/synchro-action-ext-conf";
-// export interface scanItem {
-//     code: string;
-//     type: string;
-// };
+import { SynchroActionLoanOut } from "../synchro/synchro-action-loan-out";
+import { SynchroActionLoanIn } from "../synchro/synchro-action-loan-in";
+import { LocalDatas } from "../../shared/local.data";
 
 
 @Component({
@@ -93,11 +92,6 @@ export class MainComponent implements OnInit {
 
 
 
-//code : code of action
-//title : label on bottom screen, and inrelated  option list
-//label : title on top of screen, just above actionBar
-//inst : short instruction message just above the red scan button
-//callbackScanButton : callBack when sacn button is pressed ( scanBulk is generic mass scan function, that need specific callBack related to action choosen)
 
         this.actions = [];
         let infos:any = this.databaseService.getDBinfo() || {};
@@ -108,7 +102,12 @@ export class MainComponent implements OnInit {
             if (infos.nbActs.EXT_CONF) {
                 this.actions.push( new SynchroActionExtConfirme(this, "Externalize (confirm)","Items to scan : ", "Scan items you want to confirm externalize"));
             }
-        
+            if (infos.nbActs.LOAN_OUT) {
+                this.actions.push( new SynchroActionLoanOut(this, "Loan (out)","Items to scan : ", "Scan items to be lend (i.e. going out of storage)"));
+            }
+            if (infos.nbActs.LOAN_IN) {
+                this.actions.push( new SynchroActionLoanIn(this, "Loan (in)","Items to scan : ", "Scan returned  items  (i.e. returning to storage)"));
+            }
         }
         if ((infos.nbItems && (infos.nbItems > 0)) || (infos.nbPositions &&(infos.nbPositions > 0))) {
             this.actions.push( new SynchroActionInfo(this, "Informations","Informations on item or position", "Scan barcode to get details"));
@@ -117,20 +116,11 @@ export class MainComponent implements OnInit {
 
 
        /*
-            {code:"PLACE", title:"Place", label:"lasts scans", inst:"Scan a position first, then as many item you want to locate into it. Then continue with next position", callbackScanButton : () => {this.scanBulk(this, this.callBackPlace);}},
-            {code:"INFO", title:"Informations", label:"Informations on item or position", inst:"Scan barcode to get details", callbackScanButton : () => {this.scanInfo();}},
             // {code:"RECOL", title:"Recolement", label:"lasts scans", inst:"Scan a position first, then all items in this position. Then continue with next position", callbackScanButton : () => {this.scanBulk(this, this.callBackRecol);}},
-            {code:"LOAN_OUT", title:"Loan (out)", label:"Items to scan : ",inst:"Scan items to be lend (i.e. going out of storage)", callbackScanButton : () => {this.scanBulk(this, this.callBackLoanOut);}},
-            {code:"LOAN_IN", title:"Loan (in)", label:"Items to scan : ", inst:"Scan items returning to storage ( loan ending)"},
             {code:"DESTRUC", title:"Destruction", label:"Items to scan : ", inst:"Scan items you remove from storage to destruct"},
             {code:"EXT_PRO", title:"Externalize (proposition)", label:"Externalize proposal", inst:"Scan items you propose to externalize", callbackScanButton : () => {this.scanBulk(this, this.callBackExtePropose);}},
             {code:"EXT_CONF", title:"Externalize (confirm)", label:"Items to scan : ", inst:"Scan items you want to confirm externalize", callbackScanButton : () => {this.scanBulk(this, this.callBackExteConfirm);}} 
         */
-
- //              ];
-//            this.curAct = new SynchroActionPlace(this, "Place",  "lasts scans", "Scan a position first, then as many item you want to locate into it. Then continue with next position");
-//this.curAct = new SynchroActionInfo(this, "Informations","Informations on item or position", "Scan barcode to get details");
-//this.curAct = new SynchroActionExtConfirme(this, "Externalize (confirm)","Items to scan : ", "Scan items you want to confirm externalize");
         
         this.curAct = this.actions[0];
         this.curPosition = null;
@@ -211,38 +201,13 @@ export class MainComponent implements OnInit {
         //     }
     
         // }
-        // if (this.curAct.code.startsWith("LOAN_")) {
-        //     let items:any = {};
-        //     if (this.curAct.code == "LOAN_OUT") {
-        //         items = this.databaseService.query("item-to-loan-out");
-        //     }
-        //     if (this.curAct.code == "LOAN_IN") {
-        //         items = this.databaseService.query("item-to-loan-in");
-        //     }
-        //     let cnt = 0;
-        //     for (const it of items) {
-        //         //UI update
-        //         this.infos.splice(0,0,{code: it.code , name: it.code, value:it.loanInfo.nextStep + " ("+it.loanInfo.pelKey+")"});
-        //         cnt = cnt + 1;
-        //     }
+        
         
         // }
        
     }
 
-    // updateAction(actionId:string, actionCode:string, actionItem:any) {
-    //     let acc:any = this.databaseService.getActionFromDB(actionId) || {};
-    //     acc.type = "action";
-    //     acc.synchro = "todo"; //todo,done,error
-    //     acc.time = new Date().getTime();
-    //     if (acc.item) {
-    //         //TODO merge acc.item and actionItem
-    //     }
-    //     acc.item = actionItem;
-    //     acc.code = actionCode;
-
-    //     return acc;
-    // }
+    
 
     //utility , called by callback to store action to synchronise into local DB
     // or if 'onlineMode' is set : try to synchronise with server then store it locally on fail..
@@ -257,90 +222,9 @@ export class MainComponent implements OnInit {
     //         }          
     //     }
 
-    //     if (mode == "PLACE") {
-    //         //addAction("PLACE", {position:me.curPosition,item:item.code});
-    //         acc = this.updateAction(action_code, mode, details);
-    //     }
-    //     if (this.onlineMode) {
-    //         let urll:string = "";
-    //         let param:any  = {};
-    //         switch (mode) {
-    //             case "PLACE":
-    //                 urll = "/rest/archives/storages/"+details.position;
-    //                 param = {
-    //                     "type": {
-    //                       "kind": "BOITE",
-    //                       "state": "ALIVE"
-    //                     },
-    //                     "ids": [
-    //                         details.item
-    //                     ]
-    //                 };
-    //                 break;
-    //             default:
-    //                 break;
-    //         }
+    //    
 
-    //         this.eversuiteService.callAPIpost(this.configServer, urll, param)
-    //             .subscribe(
-    //                 (response) => {
-    //                     acc.synchro = "done";
-    //                 },
-    //                 (err) => {
-    //                     acc.synchro = "error";
-    //                 },
-    //                 () => {
-    //                     /* this function is executed when the observable ends (completes) its stream */
-    //                     this.databaseService.setDocument(action_code, acc);
-    //                     //UI update
-    //                     this.infos.splice(0,0,{name: acc.item.item , value:"placed on " + acc.item.position});
-    //                 }
-    //             );            
-    //     }
-    //     else {
-    //         this.databaseService.setDocument(action_code, acc);
-    //         //UI update
-    //         this.infos.splice(0,0,{name: acc.item.item , value:"placed on " + acc.item.position});
-    //     }
-
-    //     // if (mode == "PLACE") {
-
-    //     //     if (this.onlineMode) {
-    //     //         let param:any = {
-    //     //             "type": {
-    //     //               "kind": "BOITE",
-    //     //               "state": "ALIVE"
-    //     //             },
-    //     //             "ids": [
-    //     //                 details.item
-    //     //             ]
-    //     //         };
-    //     //         this.eversuiteService.callAPIpost(this.configServer, "/rest/archives/storages/"+details.position, param)
-    //     //             .subscribe(
-    //     //             (response) => {
-    //     //                   acc.synchro = "done";
-    //     //             },
-    //     //             (err) => {
-    //     //                 acc.synchro = "error";
-    //     //                 /* this function is executed when there's an ERROR */
-    //     //                 //    if (err.status == 403) {
-    //     //                 //         dialogs.login("you have to log in", "userccodde", "passwword");
-    //     //                 //     }
-    //     //             },
-    //     //             () => {
-    //     //                    /* this function is executed when the observable ends (completes) its stream */
-    //     //                    this.databaseService.setDocument(action_code, acc);
-    //     //                    //UI update
-    //     //                    this.infos.splice(0,0,{name: acc.item.item , value:"placed on " + acc.item.position});
-    //     //             }
-    //     //         );
-    //     //     }
-    //     //     else {
-    //     //         this.databaseService.setDocument(action_code, acc);
-    //     //         //UI update
-    //     //         this.infos.splice(0,0,{name: acc.item.item , value:"placed on " + acc.item.position});
-    //     //     }
-
+    //    
 
     //     // }
     //     // if (mode == "RECOL") {
@@ -355,16 +239,7 @@ export class MainComponent implements OnInit {
     //     //     }
     //     //     this.infos.splice(0,0,{name: acc.position , value:det});
     //     // }
-    //     // if (code == "LOAN_OUT") {
-    //     //     let doc_code = code+"_ù_"+details.item;
-    //     //     //addAction("PLACE", {position:me.curPosition,item:item.code});
-    //     //     acc = this.updateAction(doc_code, code, details);
-
-    //     //     this.databaseService.setDocument(doc_code, acc);
-    //     //     //UI update
-    //     //     this.infos.splice(0,0,{name: acc.item , value:"placed on " + acc.position});
-
-    //     // }
+    //     /
     //     // if ((code == "EXT_PRO")||(code == "EXT_CONF")) {
     //     //     let doc_code = code+"_ù_"+details.item;
     //     //     //addAction("EXT_PRO", {externe:me.curExt,item:item.code});
@@ -402,175 +277,6 @@ export class MainComponent implements OnInit {
 
 //CALLBACKS
 
-// INFO
-    
-// // PLACE
-//     callBackPlace(me:MainComponent, result:any) {
-
-//         // on close called with result.closing:boolean = true;
-//         if (result.closing) {
-//             return;
-//         }
-
-//        // called after each scan
-//         let position:any = me.databaseService.getPositionFromDB(result.text);
-//         if (position) {
-//             me.curPosition = position.code;
-//         }
-//         else {
-//             let item:any = me.databaseService.getItemFromDB(result.text);
-//             if (item) {
-//                 if (me.curPosition == null) {
-//                     me.barcodeScanner.stop();
-//                     dialogs.alert({title:"Error", message:"You, should scan a position first"});
-//                 }
-//                 else {
-//                     me.addAction("PLACE", "PLACE"+this.sep+item.code, {position:me.curPosition,item:item.code});
-//                 }
-//             }
-//             else {
-//                 me.barcodeScanner.stop();
-//                 dialogs.alert({title:"Error", message:"Sorry, we don't know item having this code\n"+result.text});
-//             }
-
-
-//         }
-
-//     }
-
-
-//     // loan out of the store
-//     callBackLoanOut(me:MainComponent, result:any) {
-
-//         // on close called with result.closing:boolean = true;
-//         if (result.closing) {
-//             return;
-//         }
-
-//     // called after each scan
-//         let item:any = me.databaseService.getItemFromDB(result.text);
-//         if (item) {
-//             if (item.loanOutState) {
-//                 me.addAction("LOAN_OUT", "LOAN_OUT"+this.sep+item.code, {item:item.code,state:item.loanOutState});
-//             }
-//             else {
-//                 me.barcodeScanner.stop();
-//                 dialogs.alert({title:"Error", message:"You cannot loan this item..."});
-//             }
-
-//         //     for( let pos = 0; pos < me.infos.length; pos++) {
-//         //         let itemrow = me.infos[pos];
-//         //         if (item.code == itemrow.code) {
-//         //             me.addAction("LOAN_OUT", {item:item.code});
-//         //             me.infos.splice(pos,1);
-//         //         }
-//         //     }
-//         // }
-//         // else {
-//         //     me.barcodeScanner.stop();
-//         //     dialogs.alert("unknown item");
-//         }
-//     }
-
-// // recol
-//     // callBackRecol(me:MainComponent, result:any) {
-
-//     //     // on close called with result.closing:boolean = true;
-//     //     if (result.closing) {
-//     //         if (me.curPosition && (me.curItems.length > 0)) {
-//     //             me.addAction("RECOL", {position:me.curPosition,items:me.curItems});
-//     //             me.curItems = [];
-//     //         }
-//     //         return;
-//     //     }
-
-
-//     // // called after each scan
-//     //     let position:any = me.databaseService.getPositionFromDB(result.text);
-//     //     if (position) {
-//     //         // new position
-//     //         if (me.curPosition && (me.curPosition != position.code) && (me.curItems.length > 0)) {
-//     //             me.addAction("RECOL", {position:me.curPosition,items:me.curItems});
-//     //             me.curItems = [];
-//     //         }
-            
-//     //         me.curPosition = position.code;
-//     //     }
-//     //     else {
-//     //         let item:any = me.databaseService.getItemFromDB(result.text);
-//     //         if (item) {
-//     //             if (me.curPosition == null) {
-//     //                 me.barcodeScanner.stop();
-//     //                 me.infos.push({name:"Error", value:"You, should scan a position \n"+result.text});
-//     //             }
-//     //             else {
-//     //                 me.curItems.push(item.code);
-//     //                 //me.infos.push({name:item.code, value:me.curPosition});
-//     //             }
-//     //         }
-//     //         else {
-//     //             me.barcodeScanner.stop();
-//     //             me.infos.push({name:"Error", value:"Sorry, we don't know Item having this code\n"+result.text});
-//     //         }
-
-
-//     //     }
-
-//     // }
-
-//     callBackExtePropose(me:MainComponent, result:any) {
-//         // on close called with result.closing:boolean = true;
-//         if (result.closing) {
-//             return;
-//         }
-//         if (me.curExt == null) {
-//             me.barcodeScanner.stop();
-//             dialogs.alert({title:"Error", message:"You should choose an extren first"});
-//         }
-
-//         let item:any = me.databaseService.getItemFromDB(result.text);
-//         if (item) {
-//             if (item.externeEtat == 0) {
-//                 me.addAction("EXT_PRO", "EXT_PRO"+this.sep+item.code, {externe:me.curExt,item:item.code});
-//             }
-//             else {
-//                 me.barcodeScanner.stop();
-//                 dialogs.alert({title:"Error", message:"This item is already externalized..."});
-//             }
-//         }
-//         else {
-//             me.barcodeScanner.stop();
-//             dialogs.alert({title:"Error", message:"Sorry, we don't know item having this code\n"+result.text});
-//         }
-
-//     }
-//     callBackExteConfirm(me:MainComponent, result:any) {
-//         // on close called with result.closing:boolean = true;
-//         if (result.closing) {
-//             return;
-//         }
-//         if (me.curExt == null) {
-//             me.barcodeScanner.stop();
-//             dialogs.alert({title:"Error", message:"You, should choose an extern first"});
-//         }
-
-//         let item:any = me.databaseService.getItemFromDB(result.text);
-//         if (item) {
-//             if (item.externeEtat == 5) {
-//                 me.addAction("EXT_CONF", "EXT_CONF"+this.sep+item.code, {externe:me.curExt,item:item.code});
-//             }
-//             else {
-//                 me.barcodeScanner.stop();
-//                 dialogs.alert({title:"Error", message:"You cannot confirm this item..."});
-//             }
-//         }
-//         else {
-//             me.barcodeScanner.stop();
-//             dialogs.alert({title:"Error", message:"Sorry, we don't know item having this code\n"+result.text});
-//         }
-        
-//     }
-    
 
 
 
@@ -580,16 +286,30 @@ export class MainComponent implements OnInit {
             if (this.curAct.callbackScanButton) {
                 if (this.onlineMode && this.curAct.useOnlineMode()) {
                     // check if connected
-                    this.eversuiteService.callAPIget(this.configServer, "/rest/archives/ping")
-                        .subscribe(
+                    this.eversuiteService.callAPIget(this.configServer, "/rest/archives/ping").subscribe(
                         (response) => {
                             //connection is ok, do normalcallbak
                             this.curAct.callbackScanButton(this.curAct);
                         },
                         (err) => {
+                            //DEBUG
                                /* this function is executed when there's an ERROR */
                                if (err.status == 403) {
                                    /* 403 error : need reconnexion */
+                                   let usp:string = LocalDatas.getString("transcientCred", "");
+                                   if (usp.length > 0) {
+                                    this.eversuiteService.loginEversuite(this.configServer, usp).subscribe((result) => {
+                                        /* logged ok */
+                                        //connection is ok, do normalcallbak
+                                        this.curAct.callbackScanButton(this.curAct);
+                                    }, (error) => {
+                                        //login failed
+                                        //abort : do Nothing
+                                        dialogs.alert("Cannot reach server, deselect online mode !");
+                                    });
+                                    return;
+                                   }
+                                   else {
                                     let options = {
                                         title: "Online Mode",
                                         message: "You have to log in",
@@ -607,17 +327,19 @@ export class MainComponent implements OnInit {
                                                 }, (error) => {
                                                     //login failed
                                                     //abort : do Nothing
-                                                    this.setOnlineMode(  false);
-                                                    dialogs.alert("Login failed, online mode is stopped !");
+                                                    //this.setOnlineMode(  false);
+                                                    dialogs.alert("Cannot reach server, deselect online mode !");
                                                 });
                                         }
                                     });
+                                   }
+
                                 }
                                 else {
                                    /* other error , assuming server is unreachable...
                                    so abort */
-                                   this.setOnlineMode(  false);
-                                   dialogs.alert("Cannot reach server, online mode is stopped !");
+                                   //this.setOnlineMode(  false);
+                                   dialogs.alert("Cannot reach server, you should stop online mode !");
 
                                 }
                         },
@@ -640,7 +362,7 @@ export class MainComponent implements OnInit {
         }
     }
 
-    chooseExterne() {
+    chooseExternDialog() {
         let options = {
             title: "Extern",
             message: "Choose externe",
@@ -674,7 +396,7 @@ export class MainComponent implements OnInit {
             title: "barcode scanner simulation",
             message: "Choose code",
             cancelButtonText: "Cancel",
-            actions: ["B0000000002", "B0000000003", "B0000000099", "B0000000098", "0101AG04", "0101AG05", "ZEASD"]
+            actions: ["B0000000002", "B0000000003", "B0000000006","B0000000099", "B0000000098", "0101AG04", "0101AG05", "ZEASD"]
         };
         
         if (options) {
@@ -809,7 +531,7 @@ export class MainComponent implements OnInit {
                 this.showAction = false;
                 this.refreshUI();
                 if (code.startsWith("EXT")) {
-                    this.chooseExterne();
+                    this.chooseExternDialog();
                 }
                 return;
             }
